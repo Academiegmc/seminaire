@@ -23,14 +23,6 @@ export class ChatsPage {
               public events: Events, public alertCtrl: AlertController) {
   }
   
-  ionViewWillEnter() {
-    this.requestservice.getmyrequests();
-    this.events.subscribe('gotrequests', () => {
-      this.myrequests = [];
-      this.myrequests = this.requestservice.userdetails;
-    })
-  }
-  
   ionViewDidLeave() {
     this.events.unsubscribe('gotrequests');
     this.events.unsubscribe('friends');
