@@ -25,13 +25,13 @@ export class RequestsProvider {
 
   sendrequest(req: connreq) {
     var promise = new Promise((resolve, reject) => {
-      this.firereq.child(req.recipient).push({
+      this.firereq.child(req.recipient).push().set({
       sender: req.sender
       }).then(() => {
-        resolve({ success: true });
+        resolve({ success: true })
         }).catch((err) => {
           resolve(err);
-    })
+        })
     })
     return promise;  
   }
@@ -63,18 +63,17 @@ export class RequestsProvider {
   acceptrequest(buddy) {
     var myfriends = [];
     var promise = new Promise((resolve, reject) => {
-      this.firefriends.child(firebase.auth().currentUser.uid).push({
+      this.firefriends.child(firebase.auth().currentUser.uid).push().set({
         uid: buddy.uid
       }).then(() => {
-        this.firefriends.child(buddy.uid).push({
+        this.firefriends.child(buddy.uid).push().set({
           uid: firebase.auth().currentUser.uid
         }).then(() => {
           this.deleterequest(buddy).then(() => {
-          resolve(true);
+          resolve(true)
         })
-        
         }).catch((err) => {
-          reject(err);
+          reject(err)
          })
         }).catch((err) => {
           reject(err);
